@@ -14,6 +14,7 @@ import { RegisterComponent } from './login/register.component';
 import { PagesModule } from './pages/pages.modulo';
 import { FormsModule } from '@angular/forms';
 
+
 @NgModule({
   declarations: [
     AppComponent,
