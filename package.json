@@ -20,8 +20,11 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "chart.js": "^2.9.3",
+    "express": "^4.17.1",
     "ng2-charts": "^2.3.0",
     "rxjs": "~6.4.0",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^9.8.2",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
