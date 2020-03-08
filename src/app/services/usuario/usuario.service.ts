@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import {HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SubirArchivoService } from '../archivos/subir-archivo.service';
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class UsuarioService {
   usuario: Usuario;
   token: string;
   constructor(
-    public http: HttpClient, public router: Router
+    public http: HttpClient, public router: Router, public subirArchivo: SubirArchivoService
   ) {
     this.cargarStorage();
     console.log('Servico de usuario listo');
@@ -28,7 +29,7 @@ export class UsuarioService {
       this.token = localStorage.getItem('token');
       this.usuario =  JSON.parse(localStorage.getItem('usuario'));
 
-    } else{
+    } else {
       this.token = '';
       this.usuario =  null;
     }
@@ -42,7 +43,7 @@ export class UsuarioService {
   }
 
 
-  logout(){
+  logout() {
     this.token = '';
     this.usuario =  null;
     localStorage.removeItem('token');
@@ -66,7 +67,7 @@ export class UsuarioService {
     headers = headers.set('Content-Type', 'application/json')
     .append('Authorization', token);
     // Definimos el tipo de contenido que enviaremos
-    
+
     // tslint:disable-next-line: max-line-length
     // Anexamos el token ( Authorization es el nombre de la variable que estoy                                              enviando por el header, pueden verificarlo en el postman o cambiarle el
     // nombre pero se recomienda que sea Authorization)
@@ -77,7 +78,7 @@ export class UsuarioService {
     return this.http.post(url, null, { headers }).pipe(map((resp: any) => {
       this.guardarStorage( resp.id, resp.token, resp.usuario);
       return true;
-    })); 
+    }));
   }
 
   login(usuario: Usuario, recuerdame: boolean) {
@@ -106,6 +107,53 @@ export class UsuarioService {
       return resp.usuario;
   }));
 
+  }
+
+
+  actualizarUsuario( usuario: Usuario) {
+    let url = URL_SERVICIOS + '/usuario/' + usuario._id;
+    url += '?token=' + this.token;
+    console.log(url);
+    return this.http.put(url, usuario).pipe(map((resp: any) => {
+      const usuarioDB: Usuario = resp.usuario;
+      this.guardarStorage(usuarioDB._id, this.token, usuarioDB);
+      Swal.fire('Usuario actualizado', usuario.email, 'success');
+      return true;
+  }));
+  }
+
+
+
+  /************************USANDO LA FORMA 1 (JAVASCRIP) PARA CONECTAR LA SUBIDA DE FRONT A BACK */
+
+
+/*  cambiarImagen(file: File, id: string) {
+    console.log('cambiarImagen ');
+    this.subirArchivo.fileUpload( file, 'usuarios', id)
+    .then( (resp: any) => {
+      console.log('termino ok ', resp);
+      this.usuario.img = resp.usuarioActualizado.img;
+      this.guardarStorage(id, this.token, this.usuario);
+      Swal.fire('Usuario actualizado', this.usuario.nombre, 'success');
+    }).catch( resp => {
+      console.log('termino error' + resp);
+      Swal.fire('Error al actualizar la imagen',  'error');
+    });
+
+  }*/
+
+
+  /************************USANDO LA FORMA 2  (ANGULAR) PARA CONECTAR LA SUBIDA DE FRONT A BACK */
+
+  cambiarImagen(file: File, id: string) {
+      this.subirArchivo.fileUpload( file, 'usuarios', id).subscribe( (resp: any) => {
+      this.usuario.img = resp.usuarioActualizado.img;
+      this.guardarStorage(id, this.token, this.usuario);
+      Swal.fire('Usuario actualizado', this.usuario.nombre, 'success');
+    });    
 
   }
+
+  
+
 }
