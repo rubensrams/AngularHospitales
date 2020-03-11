@@ -13,7 +13,13 @@ export class SubirArchivoService {
 
 
 // Puede subir culquier cosa
-subirArchivo( archivo: File, tipo: string, id: string ) {
+/******************************************************** */
+
+// FORMA 1 USANDO JAVASCRIPT
+
+/*********************************************************** */
+
+/*subirArchivo( archivo: File, tipo: string, id: string ) {
 
   return new Promise( (resolve, reject ) => {
 
@@ -47,37 +53,7 @@ subirArchivo( archivo: File, tipo: string, id: string ) {
 
     });
 
-  }
-
-
-/******************************************************** */
-
-// FORMA 1 USANDO JAVASCRIPT
-
-/*********************************************************** */
-
-   /* fileUpload(fileItem: File, tipo: string, id: string) {
-
-      return new Promise( (resolve, reject ) => {
-
-      const url = URL_SERVICIOS + '/upload/' + tipo + '/' + id;
-      const formData: FormData = new FormData();
-      formData.append('imagen', fileItem, fileItem.name);
-      this.http.put(url, formData, { reportProgress: true }).pipe(map((resp: any) => {
-        console.log(resp );
-        if (resp.ok === true) {
-            console.log( 'Exito desde nueva promesa' );
-            resolve(resp);
-        } else {
-          console.log( 'Fallo la subida desde nueva promesa' );
-          reject(resp);
-        }
-
-      }));
-    });
-
-    }*/
-
+  }*/
 
 /******************************************************** */
 

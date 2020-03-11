@@ -15,7 +15,7 @@ import { PagesModule } from './pages/pages.modulo';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { ProfileComponent } from './pages/profile/profile.component';
+
 
 
 
@@ -24,8 +24,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    //ProfileComponent
-
   ],
   imports: [
     BrowserModule,
