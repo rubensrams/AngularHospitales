@@ -19,6 +19,7 @@ export class UsuariosComponent implements OnInit {
   constructor(public usuariosService: UsuarioService, public modalBridge: ModalBridgeService) { }
 
   ngOnInit() {
+    // AQUI SE MANDA UN NOTIFICACION DEL USUARIO ACTUALIZADO
     this.cargarUsuarios();
     this.modalBridge.notificacion.subscribe( resp => {
       this.cargarUsuarios();

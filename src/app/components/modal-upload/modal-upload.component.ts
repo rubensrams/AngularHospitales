@@ -43,14 +43,12 @@ export class ModalUploadComponent implements OnInit {
     ngOnInit() {
   }
 
-  subirImagen(){
-    
+  subirImagen() {
     this.subirArchivo.fileUpload(this.imagenSubir, this.modalBridge.tipo, this.modalBridge.id).subscribe(resp=> {
       this.modalBridge.notificacion.emit(resp);
       this.closebutton.nativeElement.click();
       this.inputFile.nativeElement.value = '';
     });
-
   }
 
   limpiarValores() {
