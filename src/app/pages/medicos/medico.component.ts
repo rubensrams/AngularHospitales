@@ -5,6 +5,7 @@ import { HospitalService } from '../../services/hospital/hospital.service';
 import { Medico } from '../../models/medico.model';
 import { MedicosService } from '../../services/medicos/usuario/medicos.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ModalBridgeService } from '../../components/modal-upload/modal-bridge.service';
 
 @Component({
   selector: 'app-medico',
@@ -21,7 +22,8 @@ export class MedicoComponent implements OnInit {
   constructor(public hospitalService: HospitalService,
               public medicoService: MedicosService,
               public router: Router,
-              public activateRoute: ActivatedRoute) {
+              public activateRoute: ActivatedRoute,
+              public modalBridge: ModalBridgeService) {
 
                 activateRoute.params.subscribe( params => {
 
@@ -41,6 +43,11 @@ export class MedicoComponent implements OnInit {
         this.hospitales =  resp.hospitales;
 
       });
+
+      this.modalBridge.notificacion.subscribe( resp => {
+        this.medico.img = resp.medicoActualizado.img;
+    });
+
   }
 
   guardarMedico( forma: NgForm) {
@@ -50,6 +57,7 @@ export class MedicoComponent implements OnInit {
     }
 
     this.medicoService.crearMedico(this.medico).subscribe(resp => {
+      console.log(resp);
       this.medico = resp;
       this.router.navigate(['/medico', resp._id]);
     });
@@ -67,6 +75,13 @@ export class MedicoComponent implements OnInit {
         this.medico.hospital = resp.hospital._id;
         this.cambiaHospital(resp.hospital);
       });
+  }
+
+
+  cambiarFotografia(id: string) {
+
+    this.modalBridge.setDatos('medicos', id);
+
   }
 
 }

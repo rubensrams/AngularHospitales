@@ -38,7 +38,7 @@
     <div class="col-md-3" *ngIf="medico._id">
         <div class="card card-body">
             <h4 class="box-title m-b-0 text-center">Fotografia</h4>
-            <img [src]="medico.img | imagen: 'medico'" alt="" class="img-circle img-fluid">
+            <img data-toggle="modal" data-target="#exampleModal" (click)="cambiarFotografia(medico._id)" [src]="medico.img | imagen: 'medico'" alt="" class="img-circle img-fluid pointer">
         </div>
     </div>
 </div>
